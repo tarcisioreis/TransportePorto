@@ -14,6 +14,7 @@ LinhaController:
 
 1) list - via GET - listagem de linhas de ônibus - mostra id, codigo e nome;
 2) buscarPorNome - via POST - parâmetro nome - filtra todas as linhas pelo nome informado - mostra id, codigo e nome;
+3) save - via POST - parâmetro objeto DTO linhaDTO - inclui codigo e nome no banco - primeiro pesquisa por codigo e nome na api externa e por última verifica no banco se dados não foram incluidos anteriormente;
 
 ItinerarioController:
 
