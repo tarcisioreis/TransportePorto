@@ -35,7 +35,7 @@ public class ItinerarioController {
         this.itinerarioService = itinerarioService;
     }
 
-    @GetMapping("/buscarPorLinha")
+    @PostMapping("/buscarPorLinha/{idlinha}")
     @ApiOperation(value="Listagem de Itinerário por determinada Linha.")
     ResponseEntity<String> buscarPorLinha(@Valid @RequestParam(name = "idlinha") String idlinha) {
 
@@ -48,7 +48,7 @@ public class ItinerarioController {
 
             return new ResponseEntity<>(retorno, HttpStatus.OK);
         } catch (Exception e) {
-            throw new BusinessException("Não foram encontrados itineários para a linha de ônibus - Error: " + e.getMessage());
+            throw new BusinessException(e.getMessage());
         }
 
     }

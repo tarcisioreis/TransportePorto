@@ -11,6 +11,9 @@ import java.util.List;
 @Repository
 public interface LinhaRepository extends CrudRepository<Linha, Long> {
 
+    boolean existsByCodigo(String codigo);
+    boolean existsByNome(String nome);
+
 //    public abstract Iterable<Linha> findAll();
 //
 //    public List<LinhaDTO> findAllLinhas() {
