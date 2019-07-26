@@ -53,4 +53,21 @@ public class ItinerarioController {
 
     }
 
+    @PostMapping("/save")
+    @ApiOperation(value="Salva de itinerario de Linha de Ônibus.")
+    ResponseEntity<ItinerarioDTO> save(@Valid @RequestBody ItinerarioDTO itinerarioDTO) {
+
+        try {
+            boolean found = itinerarioService.existByItinerario(itinerarioDTO);
+
+            if (found) {
+                throw new BusinessException("Itinerario de Linha já cadastrado. Verifique os dados informados.");
+            }
+        } catch (Exception e) {
+            throw new BusinessException(e.getMessage());
+        }
+
+        return new ResponseEntity<>(ItinerarioDTO.valueOf(itinerarioService.save(itinerarioDTO)), HttpStatus.OK);
+    }
+
 }

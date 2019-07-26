@@ -134,15 +134,17 @@ public class LinhaService {
     public boolean existByCodeAndName(LinhaDTO linhaDTO) {
         boolean foundName = (this.findByName(linhaDTO.getNome()).size() > 0 ? true : false);
         boolean foundCode = (this.findByCode(linhaDTO.getCodigo()).size() > 0 ? true : false);
+        boolean foundNameDataBank = (this.existsByNome(linhaDTO.getNome()) ? true : false);
+        boolean foundCodeDataBank = (this.existsByCodigo(linhaDTO.getCodigo()) ? true : false);
 
         if (foundName) {
             return foundName;   // Encontrou um nome parecido
         } else if (foundCode) {
             return foundCode;   // Encontrou um codigo parecido
-        } else if (this.existsByCodigo(linhaDTO.getCodigo())) { // Procura no banco
-            return true;
-        } else if (this.existsByNome(linhaDTO.getNome())) {     // Procura no banco
-            return true;
+        } else if (foundNameDataBank) { // Procura no banco
+            return foundNameDataBank;
+        } else if (foundCodeDataBank) { // Procura no banco
+            return foundCodeDataBank;
         } else {
             return false;   // Nenhum valor foi encontrado igual a codigo e nome da linha
         }

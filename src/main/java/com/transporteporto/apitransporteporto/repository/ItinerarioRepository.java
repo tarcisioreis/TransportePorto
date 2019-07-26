@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ItinerarioRepository extends CrudRepository<Itinerario, Long> {
+
+    boolean existsByIdLinha(String idLinha);
 }

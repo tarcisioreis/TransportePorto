@@ -65,7 +65,7 @@ public class LinhaController {
     }
 
     @PostMapping("/save")
-    @ApiOperation(value="Busca de Linha de Ônibus por Nome.")
+    @ApiOperation(value="Salva Linha de Ônibus por Nome.")
     ResponseEntity<LinhaDTO> save(@Valid @RequestBody LinhaDTO linhaDTO) {
 
         try {

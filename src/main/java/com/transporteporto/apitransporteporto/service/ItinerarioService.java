@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.transporteporto.apitransporteporto.constantes.Constantes;
 import com.transporteporto.apitransporteporto.dto.ItinerarioDTO;
+import com.transporteporto.apitransporteporto.entity.Itinerario;
 import com.transporteporto.apitransporteporto.exceptions.BusinessException;
 import com.transporteporto.apitransporteporto.repository.ItinerarioRepository;
 import okhttp3.OkHttpClient;
@@ -46,30 +47,25 @@ public class ItinerarioService {
 
             retorno = response.body().string();
 
-//            JSONObject jsonObject = new JSONObject(retorno);
-//            Map<String, Object> map = null;
-//
-//            ObjectMapper mapper = new ObjectMapper();
-//            map = mapper.readValue(String.valueOf(jsonObject.toMap()), new TypeReference<Map<String, Object>>() {
-//            });
-
-//            for(int i = 0; jsonArray.length() > i; i++) {
-//                jsonObject = jsonArray.getJSONObject(i);
-//
-//                lista.add(new LinhaDTO(jsonObject.getLong("id"),
-//                        jsonObject.getString("codigo"),
-//                        jsonObject.getString("nome")));
-//            }
-//
-//            if (lista.size() == 0 || lista.isEmpty()) {
-//                throw new BusinessException("Não foram encontradas linhas de ônibus.");
-//            }
-
             return retorno;
         } catch (Exception e) {
             return null;
         }
 
+    }
+
+    public boolean existByItinerario(ItinerarioDTO itinerarioDTO) {
+        boolean foundIntegracao = (this.findByIdLinha(itinerarioDTO.getIdLinha().toString()) == null ? false : true);
+
+        if (!foundIntegracao) {
+            foundIntegracao = itinerarioRepository.existsByIdLinha(itinerarioDTO.getIdLinha().toString());
+        }
+
+        return foundIntegracao;
+    }
+
+    public Itinerario save(ItinerarioDTO itinerarioDTO) {
+        return itinerarioRepository.save(itinerarioDTO.valueOf());
     }
 
 }

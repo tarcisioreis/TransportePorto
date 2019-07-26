@@ -8,11 +8,11 @@ import java.io.Serializable;
 public class ItinerarioDTO implements Serializable {
 
     private Long id;
-    private double latitude;
-    private double longitude;
+    private Double latitude;
+    private Double longitude;
     private Long idLinha;
 
-    public ItinerarioDTO(Long id, double latitude, double longitude, Long idLinha) {
+    public ItinerarioDTO(Long id, Double latitude, Double longitude, Long idLinha) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -26,17 +26,17 @@ public class ItinerarioDTO implements Serializable {
         this.id = id;
     }
 
-    public double getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
-    public void setLatitude(double latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public double getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
-    public void setLongitude(double longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 

@@ -15,10 +15,10 @@ public class Itinerario implements Serializable {
     private Long id;
 
     @Column(name="latitude", nullable=false)
-    private double latitude;
+    private Double latitude;
 
     @Column(name="longitude", nullable=false)
-    private double longitude;
+    private Double longitude;
 
     @Column(name="idlinha", nullable=false)
     private Long idLinha;
@@ -28,7 +28,7 @@ public class Itinerario implements Serializable {
     @Fetch(FetchMode.JOIN)
     private Linha linha;
 
-    public Itinerario(Long id, double latitude, double longitude, Long idLinha) {
+    public Itinerario(Long id, Double latitude, Double longitude, Long idLinha) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -42,17 +42,17 @@ public class Itinerario implements Serializable {
         this.id = id;
     }
 
-    public double getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
-    public void setLatitude(double latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public double getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
-    public void setLongitude(double longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 

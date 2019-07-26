@@ -14,16 +14,4 @@ public interface LinhaRepository extends CrudRepository<Linha, Long> {
     boolean existsByCodigo(String codigo);
     boolean existsByNome(String nome);
 
-//    public abstract Iterable<Linha> findAll();
-//
-//    public List<LinhaDTO> findAllLinhas() {
-//        List<Linha> lista = (List<Linha>) this.findAll();
-//        List<LinhaDTO> listaDTO = new ArrayList<LinhaDTO>();
-//
-//        for(Linha linha : lista) {
-//            listaDTO.add(new LinhaDTO(linha.getId(), linha.getCodigo(), linha.getNome()));
-//        }
-//
-//        return listaDTO;
-//    }
 }
