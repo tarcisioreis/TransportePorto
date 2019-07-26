@@ -8,6 +8,17 @@ Api desenvolvida em Spring Boot persistindo dados com JPA Hibernate em banco de 
 estrutura baseada em 3 camadas: Controller, Service e Repository, sendo a camada de banco Entity não sendo acessada diretamente 
 mas, usando acesso via DTO(Data Transfer Object) pela camada Service.
 
+Métodos implementados:
+
+LinhaController:
+
+1) list - via GET - listagem de linhas de ônibus - mostra id, codigo e nome;
+2) buscarPorNome - via POST - parâmetro nome - filtra todas as linhas pelo nome informado - mostra id, codigo e nome;
+
+ItinerarioController:
+
+1) buscarPorLinha - via POST - parâmetro idlinha - filtra todos os itinerario de uma linha informada - mostra os dados da linha e latitude e longitude;
+
 
 Requisitos para funcionamento:
 
