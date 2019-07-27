@@ -13,5 +13,6 @@ public interface LinhaRepository extends CrudRepository<Linha, Long> {
 
     boolean existsByCodigo(String codigo);
     boolean existsByNome(String nome);
+    List<LinhaDTO> findByNome(String nome);
 
 }

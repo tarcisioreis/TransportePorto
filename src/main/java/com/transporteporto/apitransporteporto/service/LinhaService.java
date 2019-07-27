@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LinhaService {
@@ -32,6 +33,9 @@ public class LinhaService {
         this.linhaRepository = linhaRepository;
     }
 
+    /*
+        Busca todas as linhas de ônibus
+     */
     public List<LinhaDTO> findAll() {
 
         httpClient = new OkHttpClient();
@@ -65,6 +69,25 @@ public class LinhaService {
         return lista;
     }
 
+    /*
+        Busca linha de ônibus por ID
+     */
+    public Optional<Linha> findById(Long id) {
+
+        Optional<Linha> linha = null;
+
+        try {
+            linha = linhaRepository.findById(id);
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+
+        return linha;
+    }
+
+    /*
+        Busca linha de ônibus por NOME
+     */
     public List<LinhaDTO> findByName(String name) {
 
         httpClient = new OkHttpClient();
@@ -91,13 +114,27 @@ public class LinhaService {
                         jsonObject.getString("codigo"),
                         jsonObject.getString("nome")));
             }
+
         } catch (Exception e) {
-            return Collections.emptyList();
+            if (lista.size() == 0) {
+                lista = this.findByNome(name);
+            }
+
+            if (lista.size() == 0) {
+                return Collections.emptyList();
+            }
         }
 
         return lista;
     }
 
+    public List<LinhaDTO> findByNome(String name) {
+        return linhaRepository.findByNome(name);
+    }
+
+    /*
+        Busca linha de ônibus por CODIGO
+     */
     public List<LinhaDTO> findByCode(String code) {
 
         httpClient = new OkHttpClient();
@@ -105,7 +142,7 @@ public class LinhaService {
         lista = new ArrayList<LinhaDTO>();
 
         request = new Request.Builder()
-                .url(Constantes.URL_BASE + Constantes.ENDPOINT_FIND_LINHA_POR_NOME + code)
+                .url(Constantes.URL_BASE + Constantes.ENDPOINT_FIND_LINHA_POR_CODIGO + code)
                 .get()
                 .build();
 
@@ -131,6 +168,9 @@ public class LinhaService {
         return lista;
     }
 
+    /*
+        Verifica na integração e banco de dados a existência ou não de linha de ônibus
+     */
     public boolean existByCodeAndName(LinhaDTO linhaDTO) {
         boolean foundName = (this.findByName(linhaDTO.getNome()).size() > 0 ? true : false);
         boolean foundCode = (this.findByCode(linhaDTO.getCodigo()).size() > 0 ? true : false);
@@ -151,16 +191,33 @@ public class LinhaService {
 
     }
 
+    /*
+        Verifica se codigo de linha de ônibus existe
+     */
     public boolean existsByCodigo(String codigo) {
         return linhaRepository.existsByCodigo(codigo);
     }
 
+    /*
+        Verifica se nome de linha de ônibus existe
+     */
     public boolean existsByNome(String nome) {
         return linhaRepository.existsByNome(nome);
     }
 
+    /*
+        Método usado para CREATE - via POST e UPDATE - via PUT
+     */
     public Linha save(LinhaDTO linhaDTO) {
         return linhaRepository.save(linhaDTO.valueOf());
+    }
+
+    /*
+        Método usado para DELETE - via DELETE
+     */
+    public void delete(Long id) {
+        Linha linha = this.findById(id).get();
+        linhaRepository.delete(linha);
     }
 
 }

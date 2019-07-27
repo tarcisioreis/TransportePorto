@@ -5,6 +5,7 @@ import com.transporteporto.apitransporteporto.exceptions.BusinessException;
 import com.transporteporto.apitransporteporto.service.LinhaService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/linha")
@@ -22,6 +24,7 @@ public class LinhaController {
     private final LinhaService linhaService;
 
     private List<LinhaDTO> lista;
+    private LinhaDTO updateLinhaDTO;
 
     @Autowired
     public LinhaController(LinhaService linhaService) {
@@ -29,7 +32,7 @@ public class LinhaController {
     }
 
     @GetMapping("/list")
-    @ApiOperation(value="Listagem de Linha de Ônibus.")
+    @ApiOperation(value="Listagem de Todas as Linha de Ônibus.")
     ResponseEntity<List<LinhaDTO>> list() {
 
         try {
@@ -65,7 +68,7 @@ public class LinhaController {
     }
 
     @PostMapping("/save")
-    @ApiOperation(value="Salva Linha de Ônibus por Nome.")
+    @ApiOperation(value="Salva os dados da Linha de Ônibus.")
     ResponseEntity<LinhaDTO> save(@Valid @RequestBody LinhaDTO linhaDTO) {
 
         try {
@@ -78,7 +81,45 @@ public class LinhaController {
             throw new BusinessException(e.getMessage());
         }
 
-        return new ResponseEntity<>(LinhaDTO.valueOf(linhaService.save(linhaDTO)), HttpStatus.OK);
+        return new ResponseEntity<>(LinhaDTO.valueOf(linhaService.save(linhaDTO)), HttpStatus.CREATED);
+
+    }
+
+    @PutMapping("/update")
+    @ApiOperation(value="Alteração de dados de Linha de Ônibus.")
+    ResponseEntity<LinhaDTO> update(@Valid @RequestBody LinhaDTO linhaDTO) {
+
+        try {
+            updateLinhaDTO = new LinhaDTO();
+            BeanUtils.copyProperties(linhaDTO, updateLinhaDTO);
+
+            if (!linhaService.findById(updateLinhaDTO.getId()).isPresent()) {
+                throw new BusinessException("Não foi encontrada Linha de Ônibus. Verifique os dados informados.");
+            }
+        } catch (Exception e) {
+            throw new BusinessException(e.getMessage());
+        }
+
+        return new ResponseEntity<>(LinhaDTO.valueOf(linhaService.save(updateLinhaDTO)), HttpStatus.OK);
+
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @ApiOperation(value="Exclusão de Linha de Ônibus.")
+    ResponseEntity<String> delete(@Valid @PathVariable Long id) {
+
+        try {
+            if (!linhaService.findById(id).isPresent()) {
+                throw new BusinessException("Não foi encontrada Linha de Ônibus. Verifique os dados informados.");
+            } else {
+                linhaService.delete(id);
+            }
+        } catch (Exception e) {
+            throw new BusinessException(e.getMessage());
+        }
+
+        return new ResponseEntity<>("Linha de Ônibus excluida com sucesso.", HttpStatus.OK);
+
     }
 
 }

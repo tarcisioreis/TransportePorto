@@ -3,12 +3,15 @@ package com.transporteporto.apitransporteporto.dto;
 import com.transporteporto.apitransporteporto.entity.Linha;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 public class LinhaDTO implements Serializable {
 
     private Long id;
     private String codigo;
     private String nome;
+
+    public LinhaDTO() { super(); }
 
     public LinhaDTO(Long id, String codigo, String nome) {
         this.id = id;
@@ -43,6 +46,10 @@ public class LinhaDTO implements Serializable {
 
     public static LinhaDTO valueOf(Linha linha) {
         return new LinhaDTO(linha.getId(), linha.getCodigo(), linha.getNome());
+    }
+
+    public static LinhaDTO valueOf(Optional<Linha> linha) {
+        return new LinhaDTO(linha.get().getId(), linha.get().getCodigo(), linha.get().getNome());
     }
 
 }

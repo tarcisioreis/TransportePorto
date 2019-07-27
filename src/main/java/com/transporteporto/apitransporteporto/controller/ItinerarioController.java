@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,8 @@ public class ItinerarioController {
 
     private final ItinerarioService itinerarioService;
 
+    private List<ItinerarioDTO> lista;
+
     @Autowired
     public ItinerarioController(ItinerarioService itinerarioService) {
         this.itinerarioService = itinerarioService;
@@ -37,16 +40,16 @@ public class ItinerarioController {
 
     @PostMapping("/buscarPorLinha/{idlinha}")
     @ApiOperation(value="Listagem de Itinerário por determinada Linha.")
-    ResponseEntity<String> buscarPorLinha(@Valid @RequestParam(name = "idlinha") String idlinha) {
+    ResponseEntity<List<ItinerarioDTO>> buscarPorLinha(@Valid @RequestParam(name = "idlinha") String idlinha) {
 
         try {
-            String retorno = itinerarioService.findByIdLinha(idlinha);
+            lista = itinerarioService.findByIdLinha(idlinha);
 
-            if (retorno == null) {
+            if (lista == null || lista.size() == 0) {
                 throw new BusinessException("Não foram encontrados itineários para a linha de ônibus.");
             }
 
-            return new ResponseEntity<>(retorno, HttpStatus.OK);
+            return new ResponseEntity<>(lista, HttpStatus.OK);
         } catch (Exception e) {
             throw new BusinessException(e.getMessage());
         }

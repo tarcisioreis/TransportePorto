@@ -12,6 +12,8 @@ public class ItinerarioDTO implements Serializable {
     private Double longitude;
     private Long idLinha;
 
+    public ItinerarioDTO() { super(); }
+
     public ItinerarioDTO(Long id, Double latitude, Double longitude, Long idLinha) {
         this.id = id;
         this.latitude = latitude;
