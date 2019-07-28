@@ -14,11 +14,16 @@ LinhaController:
 
 1) list - via GET - listagem de linhas de ônibus - mostra id, codigo e nome;
 2) buscarPorNome - via POST - parâmetro nome - filtra todas as linhas pelo nome informado - mostra id, codigo e nome;
-3) save - via POST - parâmetro objeto DTO linhaDTO - inclui codigo e nome no banco - primeiro pesquisa por codigo e nome na api externa e por última verifica no banco se dados não foram incluidos anteriormente;
+3) create - via POST - parâmetro objeto DTO linhaDTO - inclui codigo e nome no banco - primeiro pesquisa por codigo e nome na api externa e por última verifica no banco se dados não foram incluidos anteriormente;
+4) update - via PUT - parâmetro objeto DTO linhaDTO - altera codigo e nome no banco - primeiro verifica se dados existem na base e após isso faz UPDATE nos dados;
+5) delete - via DELETE - parâmetro ID da linha de ônibus - verifica se existe o dado informado e após isso faz DELETE nos dados(exclusão fisica);
 
 ItinerarioController:
 
 1) buscarPorLinha - via POST - parâmetro idlinha - filtra todos os itinerario de uma linha informada - mostra os dados da linha e latitude e longitude;
+2) create - via POST - parâmetro objeto itinerarioDTO - inclui idlinha, latitude e longitude no banco - primeiro pesquisa por idlinha na api externa, não existindo latitude e longitude, verifica no banco se já não existe as mesmas localizações para mesmo idlinha, não encontrando esse dados faz INSERT dos dados;
+3) update - via PUT - parâmetro objeto DTO itinerarioDTO - altera idlinha, latitude e longitude no banco - primeiro verifica se dados existem na base e após isso faz UPDATE nos dados;
+4) delete - via DELETE - parâmetro ID do itinerario - verifica se existe o dado informado e após isso faz DELETE nos dados(exclusão fisica);
 
 
 Requisitos para funcionamento:
