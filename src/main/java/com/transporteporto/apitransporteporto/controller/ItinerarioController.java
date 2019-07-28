@@ -48,7 +48,7 @@ public class ItinerarioController {
 
     }
 
-    @PostMapping("/save")
+    @PostMapping("/create")
     @ApiOperation(value="Criação de itinerario de Linha de Ônibus.")
     ResponseEntity<ItinerarioDTO> create(@Valid @RequestBody ItinerarioDTO itinerarioDTO) {
 

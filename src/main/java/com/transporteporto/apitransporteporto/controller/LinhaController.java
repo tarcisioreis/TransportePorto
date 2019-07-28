@@ -67,7 +67,7 @@ public class LinhaController {
 
     }
 
-    @PostMapping("/save")
+    @PostMapping("/create")
     @ApiOperation(value="Criação de dados da Linha de Ônibus.")
     ResponseEntity<LinhaDTO> create(@Valid @RequestBody LinhaDTO linhaDTO) {
 
