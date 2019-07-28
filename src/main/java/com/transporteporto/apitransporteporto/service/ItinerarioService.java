@@ -173,9 +173,21 @@ public class ItinerarioService {
         return foundIntegracao;
     }
 
-//    public boolean existsByIdLinha(Long idLinha) {
-//        return itinerarioRepository.existsByIdLinha(idLinha);
-//    }
+    /*
+        Busca itinerario de linha de ônibus por ID
+     */
+    public Optional<Itinerario> findById(Long id) {
+
+        Optional<Itinerario> itinerario = null;
+
+        try {
+            itinerario = itinerarioRepository.findById(id);
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+
+        return itinerario;
+    }
 
     /*
         Busca itinerario na base de dados
@@ -189,6 +201,43 @@ public class ItinerarioService {
      */
     public Itinerario save(ItinerarioDTO itinerarioDTO) {
         return itinerarioRepository.save(itinerarioDTO.valueOf());
+    }
+
+    /*
+        Método usado para DELETE - via DELETE
+     */
+    public void delete(Long id) {
+        Itinerario itinerario = this.findById(id).get();
+        itinerarioRepository.delete(itinerario);
+    }
+
+    public String validarAtributos(ItinerarioDTO itinerarioDTO, String operacao) {
+
+        String message = null;
+
+        try {
+            if (operacao.equals("UPDATE")) {
+                if (itinerarioDTO.getId() <= 0) {
+                    message = "Informe ID do Itinerario.";
+                }
+            }
+
+            if (itinerarioDTO.getIdLinha() <= 0 && message == null) {
+                message = "Informe ID da Linha.";
+            }
+
+            if (itinerarioDTO.getLatitude() == 0 && message == null) {
+                message = "Informe a Latitude.";
+            }
+
+            if (itinerarioDTO.getLongitude() == 0  && message == null) {
+                message = "Informe a Longitude.";
+            }
+        } catch (Exception e) {
+            message = e.getMessage();
+        }
+
+        return message;
     }
 
 }

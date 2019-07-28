@@ -23,8 +23,9 @@ public class LinhaController {
     private final LinhaService linhaService;
 
     private List<LinhaDTO> lista;
-    private LinhaDTO updateLinhaDTO;
-    boolean found;
+    private LinhaDTO dto;
+    private boolean found;
+    private String message;
 
     @Autowired
     public LinhaController(LinhaService linhaService) {
@@ -72,11 +73,16 @@ public class LinhaController {
     ResponseEntity<LinhaDTO> create(@Valid @RequestBody LinhaDTO linhaDTO) {
 
         try {
+            if ((message = linhaService.validarAtributos(linhaDTO, "CREATE")) != null) {
+                throw new BusinessException(message);
+            }
+
             found = linhaService.existByCodeAndName(linhaDTO);
 
             if (found) {
                 throw new BusinessException("Linha já cadastrada. Verifique o código ou nome informados.");
             }
+
         } catch (Exception e) {
             throw new BusinessException(e.getMessage());
         }
@@ -90,17 +96,21 @@ public class LinhaController {
     ResponseEntity<LinhaDTO> update(@Valid @RequestBody LinhaDTO linhaDTO) {
 
         try {
-            updateLinhaDTO = new LinhaDTO();
-            BeanUtils.copyProperties(linhaDTO, updateLinhaDTO);
+            if ((message = linhaService.validarAtributos(linhaDTO, "UPDATE")) != null) {
+                throw new BusinessException(message);
+            }
 
-            if (!linhaService.findById(updateLinhaDTO.getId()).isPresent()) {
+            dto = new LinhaDTO();
+            BeanUtils.copyProperties(linhaDTO, dto);
+
+            if (!linhaService.findById(dto.getId()).isPresent()) {
                 throw new BusinessException("Não foi encontrada Linha de Ônibus. Verifique os dados informados.");
             }
         } catch (Exception e) {
             throw new BusinessException(e.getMessage());
         }
 
-        return new ResponseEntity<>(LinhaDTO.valueOf(linhaService.save(updateLinhaDTO)), HttpStatus.OK);
+        return new ResponseEntity<>(LinhaDTO.valueOf(linhaService.save(dto)), HttpStatus.OK);
 
     }
 

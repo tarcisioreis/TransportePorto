@@ -1,7 +1,7 @@
 package com.transporteporto.apitransporteporto.entity;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+//import org.hibernate.annotations.Fetch;
+//import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -23,10 +23,12 @@ public class Itinerario implements Serializable {
     @Column(name="idlinha", nullable=false)
     private Long idLinha;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idlinha", insertable = false, updatable = false)
-    @Fetch(FetchMode.JOIN)
-    private Linha linha;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "idlinha", insertable = false, updatable = false)
+//    @Fetch(FetchMode.JOIN)
+//    private Linha linha;
+
+    public Itinerario() { super(); }
 
     public Itinerario(Long id, Double latitude, Double longitude, Long idLinha) {
         this.id = id;

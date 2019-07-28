@@ -220,4 +220,28 @@ public class LinhaService {
         linhaRepository.delete(linha);
     }
 
+    public String validarAtributos(LinhaDTO linhaDTO, String operacao) {
+
+        String message = null;
+
+        try {
+
+            if (operacao.equals("UPDATE")) {
+                if (linhaDTO.getId() <= 0) {
+                    message = "Informe ID da Linha.";
+                }
+            }
+            if ((linhaDTO.getCodigo().isEmpty() || linhaDTO.getCodigo().length() == 0) && message == null) {
+                message = "Informe CODIGO da Linha.";
+            }
+            if ((linhaDTO.getNome().isEmpty() || linhaDTO.getNome().length() == 0) && message == null) {
+                message = "Informe NOME da Linha.";
+            }
+        } catch (Exception e) {
+            message = e.getMessage();
+        }
+
+        return message;
+    }
+
 }
