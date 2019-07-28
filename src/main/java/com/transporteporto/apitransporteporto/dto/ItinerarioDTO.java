@@ -1,7 +1,6 @@
 package com.transporteporto.apitransporteporto.dto;
 
 import com.transporteporto.apitransporteporto.entity.Itinerario;
-import com.transporteporto.apitransporteporto.entity.Linha;
 
 import java.io.Serializable;
 

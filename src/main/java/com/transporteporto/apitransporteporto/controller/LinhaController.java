@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/linha")
@@ -25,6 +24,7 @@ public class LinhaController {
 
     private List<LinhaDTO> lista;
     private LinhaDTO updateLinhaDTO;
+    boolean found;
 
     @Autowired
     public LinhaController(LinhaService linhaService) {
@@ -68,11 +68,11 @@ public class LinhaController {
     }
 
     @PostMapping("/save")
-    @ApiOperation(value="Salva os dados da Linha de Ônibus.")
-    ResponseEntity<LinhaDTO> save(@Valid @RequestBody LinhaDTO linhaDTO) {
+    @ApiOperation(value="Criação de dados da Linha de Ônibus.")
+    ResponseEntity<LinhaDTO> create(@Valid @RequestBody LinhaDTO linhaDTO) {
 
         try {
-            boolean found = linhaService.existByCodeAndName(linhaDTO);
+            found = linhaService.existByCodeAndName(linhaDTO);
 
             if (found) {
                 throw new BusinessException("Linha já cadastrada. Verifique o código ou nome informados.");
