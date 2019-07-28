@@ -58,11 +58,12 @@ public class ItinerarioController {
 
             if (found) {
                 throw new BusinessException("Itinerario de Linha já cadastrada, dados de localização já cadastrados. Verifique os dados informados.");
-            } else if (dto.getLatitude() == itinerarioDTO.getLatitude() ||
-                       dto.getLongitude() == itinerarioDTO.getLongitude()) {
-                throw new BusinessException("Dados de localização já cadastrados. Verifique os dados informados.");
+            } else if (dto != null) {
+                if (dto.getLatitude()  == itinerarioDTO.getLatitude() ||
+                        dto.getLongitude() == itinerarioDTO.getLongitude()) {
+                    throw new BusinessException("Dados de localização já cadastrados. Verifique os dados informados.");
+                }
             }
-
         } catch (Exception e) {
             throw new BusinessException(e.getMessage());
         }

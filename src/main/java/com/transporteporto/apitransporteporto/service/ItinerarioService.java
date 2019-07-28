@@ -46,6 +46,10 @@ public class ItinerarioService {
 
             retorno = response.body().string();
 
+            if (retorno.contains("encontrada")) {
+                return Collections.EMPTY_LIST;
+            }
+
             JSONObject jsonObjectLinha = null;
             JSONObject jsonObjectRouter = null;
             JSONArray jsonArrayRouter = new JSONArray();
@@ -135,7 +139,7 @@ public class ItinerarioService {
 
             return lista;
         } catch (Exception e) {
-            return null;
+            return Collections.EMPTY_LIST;
         }
 
     }
