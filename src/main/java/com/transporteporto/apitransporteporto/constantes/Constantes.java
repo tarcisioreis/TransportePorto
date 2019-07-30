@@ -12,4 +12,5 @@ public class Constantes {
     public static final String ENDPOINT_LIST_ITINERARIO_POR_LINHA = "?a=il&p=";
     public static final String ENDPOINT_FIND_LINHA_POR_NOME = "?a=nc&t=o&p=";
     public static final String ENDPOINT_FIND_LINHA_POR_CODIGO = "?a=nc&t=o&p=";
+    public static final String ENDPOINT_LIST_LINHAS_ROTA = "?a=tp&p=";
 }

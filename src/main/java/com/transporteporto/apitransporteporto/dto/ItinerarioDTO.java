@@ -10,6 +10,7 @@ public class ItinerarioDTO implements Serializable {
     private Double latitude;
     private Double longitude;
     private Long idLinha;
+    private Double raio;
 
     public ItinerarioDTO() { super(); }
 
@@ -46,6 +47,13 @@ public class ItinerarioDTO implements Serializable {
     }
     public void setIdLinha(Long idLinha) {
         this.idLinha = idLinha;
+    }
+
+    public Double getRaio() {
+        return raio;
+    }
+    public void setRaio(Double raio) {
+        this.raio = raio;
     }
 
     public Itinerario valueOf() {

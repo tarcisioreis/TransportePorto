@@ -1,6 +1,7 @@
 package com.transporteporto.apitransporteporto.controller;
 
 import com.transporteporto.apitransporteporto.dto.ItinerarioDTO;
+import com.transporteporto.apitransporteporto.dto.LinhaDTO;
 import com.transporteporto.apitransporteporto.exceptions.BusinessException;
 import com.transporteporto.apitransporteporto.service.ItinerarioService;
 import io.swagger.annotations.Api;
@@ -30,6 +31,36 @@ public class ItinerarioController {
     @Autowired
     public ItinerarioController(ItinerarioService itinerarioService) {
         this.itinerarioService = itinerarioService;
+    }
+
+    @GetMapping("/buscarRotas")
+    @ApiOperation(value="Listagem de Linhas de Ônibus determinadas por Latitude Minima, Longitude Minima e raio em KM")
+    ResponseEntity<List<LinhaDTO>> buscarRotas(@Valid @RequestParam(name = "latitude") Double latitude,
+                                               @RequestParam(name = "longitude") Double longitude,
+                                               @RequestParam(name = "raio") Double raio) {
+
+        try {
+            dto = new ItinerarioDTO();
+
+            dto.setLatitude(latitude);
+            dto.setLongitude(longitude);
+            dto.setRaio(raio);
+
+            if ((message = itinerarioService.validarAtributos(dto, "ROTA")) != null) {
+                throw new BusinessException(message);
+            }
+
+            List<LinhaDTO> listaLinhas = itinerarioService.rotas(latitude, longitude, raio);
+
+            if (listaLinhas.isEmpty()) {
+                throw new BusinessException("Nenhuma linha encontrada nos dados informados.");
+            }
+
+            return new ResponseEntity<>(listaLinhas, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new BusinessException(e.getMessage());
+        }
+
     }
 
     @PostMapping("/buscarPorLinha/{idlinha}")
