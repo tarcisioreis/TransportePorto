@@ -24,6 +24,7 @@ ItinerarioController:
 2) create - via POST - parâmetro objeto itinerarioDTO - inclui idlinha, latitude e longitude no banco - primeiro pesquisa por idlinha na api externa, não existindo latitude e longitude, verifica no banco se já não existe as mesmas localizações para mesmo idlinha, não encontrando esse dados faz INSERT dos dados;
 3) update - via PUT - parâmetro objeto DTO itinerarioDTO - altera idlinha, latitude e longitude no banco - primeiro verifica se dados existem na base e após isso faz UPDATE nos dados;
 4) delete - via DELETE - parâmetro ID do itinerario - verifica se existe o dado informado e após isso faz DELETE nos dados(exclusão fisica);
+5) buscarRotas - via GET - parâmetros latitude, longitude e raio - faz busca usando a API PoaDigital e retorna a existência de linhas de ônibus dentro do raio informado em KM.
 
 
 Requisitos para funcionamento:
@@ -36,6 +37,6 @@ Requisitos para funcionamento:
 
 Para ver os Web Services instalei o SwaggerUI para interagir com a API.
 
-
+Projeto pode ser testado online no endereço: https://apitransporteporto.herokuapp.com/swagger-ui.html
 
 Contato: Tarcisio Machado dos Reis - e-mail: tarcisio.reis.ti@gmail.com ou whatsapp 051 9 8490-4355.
