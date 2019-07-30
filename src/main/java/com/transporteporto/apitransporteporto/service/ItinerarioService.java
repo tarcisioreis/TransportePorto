@@ -14,7 +14,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import uk.me.jstott.jcoord.LatLng;
 
 import java.util.*;
 
@@ -49,15 +48,15 @@ public class ItinerarioService {
         Double LngMin = longitude - ArcoLng;
         Double LngMax = longitude + ArcoLng;
 
-        LatLng dadosMinimo = new LatLng(LatMin, LngMin);
-        LatLng dadosMaximo = new LatLng(LatMax, LngMax);
+//        LatLng dadosMinimo = new LatLng(LatMin, LngMin);
+//        LatLng dadosMaximo = new LatLng(LatMax, LngMax);
 
 //        LatLng l1 = new LatLng(-30.14296222668432,-50.56082031250003);
 //        LatLng l2 = new LatLng(-29.79200328961529,-51.87917968750003);
 //
 //        Double distancia = l1.distance(l2);
 
-        Double distcalc = dadosMinimo.distance(dadosMaximo);
+//        Double distcalc = dadosMinimo.distance(dadosMaximo);
 
         OkHttpClient httpClient = new OkHttpClient();
         Response response = null;
@@ -65,8 +64,8 @@ public class ItinerarioService {
 
         Request request = new Request.Builder()
                 .url(Constantes.URL_BASE + Constantes.ENDPOINT_LIST_LINHAS_ROTA + "((" +
-                        dadosMaximo.getLat() + "," + dadosMaximo.getLng() + "), (" +
-                        dadosMinimo.getLat() + "," + dadosMinimo.getLng() + ")))")
+                        LatMax + "," + LngMax + "), (" +
+                        LatMin + "," + LngMin + ")))")
 ////                .url(Constantes.URL_BASE + Constantes.ENDPOINT_LIST_LINHAS_ROTA + "((-30.14296222668432,-51.87917968750003),(-29.79200328961529,-50.56082031250003))))")
                 .get()
                 .build();
